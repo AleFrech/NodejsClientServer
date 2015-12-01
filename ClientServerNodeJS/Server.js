@@ -4,20 +4,15 @@
 var User = require("./User.js")
 var FileManager = require("./FileManager");
 
-require('net') .createServer(function (socket) {
+require('net').createServer(function (socket) {
         console.log("connected");
         socket.on('data', function (data) {
             var fm= new FileManager();
             console.log(data.toString());
             var tokens=data.toString().split("\n")
             if(tokens[0]==='Add'){
-                var bool=fm.writeUser(tokens[1]);
-                if(bool){
-                    console.log("User Added!!!!");
-                    socket.write('Yes','utf8');
-                }else{
-                    socket.write('No','utf8');
-                }
+                var x=fm.writeUser(tokens[1]);
+                socket.write('Yes','utf8');
             }
             if(tokens[0]==="ShowUser"){
                 var user= fm.searchUser(tokens[1]);
@@ -25,7 +20,9 @@ require('net') .createServer(function (socket) {
             }
             if(tokens[0]==="DeleteUser"){
                 var users= fm.getUsers();
+                console.log(users.toString());
                 var userlist= users.split("\n");
+                console.log(userlist);
                 fm.reWriteFile();
                 for(var i=0;i<userlist.length;i++){
                     if(!userlist[i].includes(tokens[1])){
@@ -35,8 +32,8 @@ require('net') .createServer(function (socket) {
                 socket.write('Yes','utf8');
             }
             if(tokens[0]==="SendEmail"){
-                var user=fm.searchUser(tokens[1]);
-                var userlist= users.split(',');
+                var users=fm.searchUser(tokens[1]);
+                var userlist= users.split(",")
                 var api_key = 'key-410b4bd9be9ab2241c624fd0a6bd35bf';
                 var domain = 'sandbox001786de44a44eec898cd90610e9097d.mailgun.org';
                 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
@@ -49,15 +46,20 @@ require('net') .createServer(function (socket) {
                 var res=' ';
                 mailgun.messages().send(data, function (error, body) {
                     console.log(body);
-                    if(body.includes('Thank you')){
-                        res='Yes';
-                    }
+                    res='Yes';
+                    socket.write(res,'utf8');
                 });
-                socket.write(res,'utf8');
+
             }
+
         });
+        process.on('uncaughtException', function (err) {
+            console.log(err);
+        });
+
         socket.on('close',function(data){
             console.log(data);
         });
+
     })
     .listen(8888);

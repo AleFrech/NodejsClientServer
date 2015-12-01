@@ -1,3 +1,2 @@
-alefrech,Alejandro Frech,alefrech@gmail.com,0501-1995-09876,07-08-1994,http://www.imada.sdu.dk/~vandinfa/image/empty_face.png 
-todelete,todelete deletete,todelete@gmail.com,0501-4354-45455,12-12-1234,wwww.fofnofe.com
-eqweqwe,wewefffrfwff wefwf,ewwefwffe@gmail.com,1234-1234-12345,12-12-1234,sdwfwefwfw.com
+alefrech,Alejandro Frech,alefrech@gmail.com,0501-1995-02216,07-08-1994,http://www.imada.sdu.dk/~vandinfa/image/empty_face.png 
+

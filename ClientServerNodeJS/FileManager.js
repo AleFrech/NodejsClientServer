@@ -8,18 +8,23 @@ function FileManager(){}
 var fs = require('fs');
 
     method.writeUser = function(user){
-        var x=fs.appendFileSync('Data.txt', user+'\n','utf8');
-        if(x === undefined){
-            return true;
-        }else{
-            return false;
-        }
+
+        fs.appendFile('Data.txt',user+"\n",'utf8',function (err) {
+            if (err)
+                return err.toString();
+            else
+                return "Yes";
+
+        });
     }
 
     method.reWriteFile=function(){
-        fs.open('Data.txt','w');
-        fs.write(' ');
-        fs.close();
+        fs.open('Data.txt','w',function(err,fd) {
+            fs.write(" ");
+            fs.close(fd,function(err){
+
+            });
+        });
     }
 
     method.searchUser=function(username){
@@ -35,13 +40,7 @@ var fs = require('fs');
 
     method.getUsers=function(){
         var users = fs.readFileSync('Data.txt',"utf8");
-        var userlist=users.split("\n");
-        var list=' ';
-        for(var u in userlist) {
-            if(userlist[u]!='')
-                list+=userlist[u];
-        }
-        return list;
+        return users;
     }
 
     method.isUnique=function(str) {

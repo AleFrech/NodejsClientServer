@@ -2,12 +2,12 @@
  * Created by AlejandroFrech on 11/16/2015.
  */
     var readline = require('readline');
-    var Client = require("./Client.js");
+    var ModulCliente = require('./Client');
     var Validations= require("./Validations.js");
     var val= new Validations();
     var User =require("./User.js");
-    var c = new Client();
-    var client= c.iniciateClient();
+    var HandleCliente= new ModulCliente.HandleClient
+    var client=HandleCliente.SartClient();
     var rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
@@ -47,7 +47,7 @@
                                                     } else {
                                                         console.log("Error User not added!!!");
                                                     }
-                                                   // client.destroy(); // kill client after server's response
+                                                    client.destroy(); // kill client after server's response
                                                 });
                                                 client.on('delete',function(del){
                                                     console.log(del)
@@ -67,7 +67,6 @@
                         username = u;
                         client.write('ShowUser' + "\n" + username);
                         client.on('data', function (data) {
-                            console.log(data.toString());
                             if (data.toString() === ' ') {
                                 console.log("User not in database!!!");
                             } else {
@@ -79,7 +78,7 @@
                                 console.log("   Identity Card : "+tokens[3])
                                 console.log("   Birth Date  : "+tokens[4])
                             }
-                           // client.destroy(); // kill client after server's response
+                            client.destroy(); // kill client after server's response
                         });
                         client.on('delete',function(del){
                             console.log(del)
@@ -99,7 +98,7 @@
                             } else {
                                 console.log("Error User does not exist!!!");
                             }
-                            //client.destroy(); // kill client after server's response
+                            client.destroy(); // kill client after server's response
                         });
                         rl.close();
                         client.on('delete',function(del){
@@ -116,13 +115,12 @@
                             email = e;
                             client.write('SendEmail' + "\n" + username+"\n"+email);
                             client.on('data', function (data) {
-                                console.log(data.toString());
                                 if (data.toString() === 'Yes') {
-                                    console.log("Email sent  successfully!!!");
+                                    console.log("   Email sent  successfully!!!");
                                 } else {
-                                    console.log("Error email not added!!!");
+                                    console.log("   Error email not added!!!");
                                 }
-                                   //client.destroy(); // kill client after server's response
+                                   client.destroy(); // kill client after server's response
                                 });
                             rl.close();
                             client.on('delete',function(del){
@@ -130,11 +128,8 @@
                             });
                         });
                     });
-                    break;
-                case '5':
+                    break;                case '5':
                     process.exit(0)
                     break;
             }
-        }).on('close', function () {
-            process.exit(0);
         });
