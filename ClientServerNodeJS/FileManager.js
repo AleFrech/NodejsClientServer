@@ -27,28 +27,36 @@ var fs = require('fs');
         });
     }
 
-    method.searchUser=function(username){
-        var users = fs.readFileSync('Data.txt',"utf8");
-        var userlist=users.split("\n");
-        for(var line in userlist) {
-            if(userlist[line].includes(username)){
-                return userlist[line];
-            }
-        }
-        return ' ';
-    }
 
     method.getUsers=function(){
         var users = fs.readFileSync('Data.txt',"utf8");
         return users;
     }
 
-    method.isUnique=function(str) {
-        var users = fs.readFileSync('Data.txt',"utf8");
+    method.searchUser=function(username){
+    var users =this.getUsers();
+    var userlist=users.split("\n");
+    for(var usr in userlist) {
+        var tokens=userlist[usr].split(",");
+        if(tokens[0]==username){
+            return userlist[usr];
+        }
+    }
+    return ' ';
+}
+
+    method.isUnique=function(str,pos) {
+        var users =this.getUsers();
         var userlist=users.split("\n");
-        for(var i=0;i<userlist.length;i++){
-            if(userlist[i].includes(str))
+        if (userlist.length<=1)
+            return true;
+        for(var usr in userlist) {
+            var tokens=userlist[usr].split(",");
+            if (tokens.length<=1)
+                return true;
+            if(tokens[pos]==str){
                 return false;
+            }
         }
         return true;
     }

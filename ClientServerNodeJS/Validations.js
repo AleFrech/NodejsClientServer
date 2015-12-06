@@ -10,7 +10,7 @@ function Validations(){}
 
     method.verifyEmail=function(str){
         var fm= new FileManager();
-        if(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str) && fm.isUnique(str)){
+        if(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str) && fm.isUnique(str,2)){
             return 1;
         }else{
             console.log("Email already taken or not valid");
@@ -19,7 +19,7 @@ function Validations(){}
     }
     method.verifyUser=function(str){
         var fm = new FileManager();
-        if(fm.isUnique(str)){
+        if(fm.isUnique(str,0)){
             return 1;
         }else{
             console.log("Username already taken");
@@ -28,7 +28,7 @@ function Validations(){}
     }
 method.veirfyCedula=function(str){
         var fm= new FileManager();
-        if(/\d{4}-\d{4}-\d{5}/.test(str) && fm.isUnique(str)){
+        if(/\d{4}-\d{4}-\d{5}/.test(str) && fm.isUnique(str,3)){
             return 1;
         }else{
             console.log("Id Number already taken or not valid");
