@@ -25,7 +25,8 @@ require('net').createServer(function (socket) {
                 console.log(userlist);
                 fm.reWriteFile();
                 for(var i=0;i<userlist.length;i++){
-                    if(!userlist[i].includes(tokens[1])){
+                    var tok=userlist[i].split(",");
+                    if(tokens[1]!=tok[0]){
                         fm.writeUser(userlist[i]);
                     }
                 }
